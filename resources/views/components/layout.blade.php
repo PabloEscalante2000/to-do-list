@@ -23,6 +23,10 @@
                    class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
                     + Nueva idea
                 </a>
+                <a href="/register"
+                   class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition">
+                    Registrar
+                </a>
             </div>
         </div>
     </nav>

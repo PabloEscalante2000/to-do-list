@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreIdeaRequest;
 use App\Models\Idea;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class IdeaController extends Controller
@@ -21,16 +21,10 @@ class IdeaController extends Controller
         return view('ideas.create');
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(StoreIdeaRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'description' => ['required', 'string','min:10', 'max:1000'],
-        ]);
 
-        Idea::create([
-            'description' => $validated['description'],
-            'state' => 'pending',
-        ]);
+        Idea::create($request->validated());
 
         return redirect()->route('ideas.index');
     }
@@ -45,14 +39,9 @@ class IdeaController extends Controller
         return view('ideas.edit', ['idea' => $idea]);
     }
 
-    public function update(Request $request, Idea $idea): RedirectResponse
+    public function update(StoreIdeaRequest $request, Idea $idea): RedirectResponse
     {
-        $validated = $request->validate([
-            'description' => ['required', 'string', 'max:1000'],
-            'state' => ['required', 'in:pending,in_progress,completed'],
-        ]);
-
-        $idea->update($validated);
+        $idea->update($request->validated());
 
         return redirect()->route('ideas.show', $idea);
     }

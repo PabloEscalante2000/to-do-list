@@ -22,7 +22,20 @@ class StoreIdeaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'description' => ['required', 'string','min:10', 'max:1000'],
+            'state' => ['required', 'in:pending,in_progress,completed'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'description.required' => 'La descripción es obligatoria.',
+            'description.string' => 'La descripción debe ser una cadena de texto.',
+            'description.min' => 'La descripción debe tener al menos :min caracteres.',
+            'description.max' => 'La descripción no puede tener más de :max caracteres.',
+            'state.required' => 'El estado es obligatorio.',
+            'state.in' => 'El estado debe ser uno de los siguientes: pending, in_progress, completed.',
         ];
     }
 }
