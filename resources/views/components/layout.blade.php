@@ -18,15 +18,35 @@
                 ✅ To Do List
             </a>
             <div class="flex items-center gap-4 text-sm font-medium text-gray-500">
-                <a href="{{ route('ideas.index') }}" class="hover:text-indigo-600 transition">Ideas</a>
-                <a href="{{ route('ideas.create') }}"
-                   class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
-                    + Nueva idea
-                </a>
-                <a href="/register"
-                   class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition">
-                    Registrar
-                </a>
+                @can('view-admin')
+                    <a href="/admin" class="hover:text-indigo-600 transition">Admin</a>
+                @endcan
+                @auth
+                    <a href="{{ route('ideas.index') }}" class="hover:text-indigo-600 transition">Ideas</a>
+                    
+                    <a href="{{ route('ideas.create') }}"
+                    class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+                        + Nueva idea
+                    </a> 
+                @endauth
+                @guest
+                    <a href="/register"
+                    class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition">
+                        Registrar
+                    </a>
+                    <a href="/login"
+                    class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition">
+                        Log In
+                    </a>
+                @endguest
+
+                @auth
+                    <form id="logout-form" action="/logout" method="POST">
+                        @csrf
+                        @method("DELETE")
+                        <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition" type="submit">Cerrar Sesión</button>
+                    </form>
+                @endauth
             </div>
         </div>
     </nav>
